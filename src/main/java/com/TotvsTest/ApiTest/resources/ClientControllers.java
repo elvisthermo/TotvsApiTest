@@ -4,9 +4,11 @@ package com.TotvsTest.ApiTest.resources;
 import com.TotvsTest.ApiTest.models.Address;
 import com.TotvsTest.ApiTest.models.Client;
 import com.TotvsTest.ApiTest.models.Dependent;
+import com.TotvsTest.ApiTest.models.Telephone;
 import com.TotvsTest.ApiTest.repositories.AdressRepository;
 import com.TotvsTest.ApiTest.repositories.ClientRepository;
 import com.TotvsTest.ApiTest.repositories.DependentRepository;
+import com.TotvsTest.ApiTest.repositories.TelephoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class ClientControllers {
     @Autowired
     DependentRepository dependentRepository;
 
+    @Autowired
+    TelephoneRepository telephoneRepository;
+
     @GetMapping("/clients")
     public Iterable<Client> listClient(){
         return  clientRepository.findAll();
@@ -40,6 +45,9 @@ public class ClientControllers {
     public Client saveClient(@RequestBody Client client){
         List<Address> address  = client.getAddress();
         List<Dependent>dependents = client.getDependents();
+        List<Telephone>telephones = client.getTelephone();
+
+
         for(int i=0;i<address.size();i++){
             address.get(i).setClient(client);
             addressRepository.save(address.get(i));
@@ -49,7 +57,10 @@ public class ClientControllers {
             dependentRepository.save(dependents.get(i));
         }
 
-
+        for(int i=0;i<telephones.size();i++){
+            telephones.get(i).setTelephone(client);
+            telephoneRepository.save(telephones.get(i));
+        }
         return clientRepository.save(client);
 
     }

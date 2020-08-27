@@ -30,11 +30,11 @@ public class Client {
     private List<Dependent> dependents = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "telephones",
+            mappedBy = "telephone",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Address> telephones = new ArrayList<>();
+    private List<Telephone> telephone = new ArrayList<>();
 
     private String nickname;
     private String cpfOrCnpj;
@@ -61,12 +61,12 @@ public class Client {
         this.dependents = dependents;
     }
 
-    public List<Address> getTelephones() {
-        return telephones;
+    public List<Telephone> getTelephone() {
+        return telephone;
     }
 
-    public void setTelephones(List<Address> telephones) {
-        this.telephones = telephones;
+    public void setTelephone(List<Telephone> telephone) {
+        this.telephone = telephone;
     }
 
     public Long getId() {

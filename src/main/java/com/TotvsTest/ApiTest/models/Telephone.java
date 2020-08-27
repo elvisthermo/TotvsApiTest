@@ -14,9 +14,10 @@ public class Telephone {
 	private String ddd;
 	private String number;
 
-	@ManyToOne
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "client_id")
-	private Client telephones;
+	private Client telephone;
 
 
 	public Long getId() {
@@ -59,7 +60,7 @@ public class Telephone {
 		this.number = number;
 	}
 
-	public void setTelephones(Client telephones) {
-		this.telephones = telephones;
+	public void setTelephone(Client telephone) {
+		this.telephone = telephone;
 	}
 }

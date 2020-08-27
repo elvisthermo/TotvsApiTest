@@ -1,19 +1,8 @@
 package com.TotvsTest.ApiTest;
 
-import com.TotvsTest.ApiTest.models.Address;
-import com.TotvsTest.ApiTest.models.Category;
-import com.TotvsTest.ApiTest.models.Client;
-import com.TotvsTest.ApiTest.models.Pessoa;
-import com.TotvsTest.ApiTest.repositories.AdressRepository;
-import com.TotvsTest.ApiTest.repositories.CartRepository;
-import com.TotvsTest.ApiTest.repositories.ClientRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class ApiTestApplication {
