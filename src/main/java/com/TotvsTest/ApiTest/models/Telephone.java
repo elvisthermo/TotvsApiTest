@@ -14,8 +14,7 @@ public class Telephone {
 	private String ddd;
 	private String number;
 
-
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id")
 	private Client telephone;
 

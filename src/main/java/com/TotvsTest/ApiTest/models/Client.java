@@ -37,6 +37,7 @@ public class Client {
     private List<Telephone> telephone = new ArrayList<>();
 
     private String nickname;
+    @Column(unique = true)
     private String cpfOrCnpj;
     private String profession;
     private String salary;

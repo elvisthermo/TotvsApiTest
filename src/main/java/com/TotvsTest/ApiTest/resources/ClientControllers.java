@@ -5,7 +5,7 @@ import com.TotvsTest.ApiTest.models.Address;
 import com.TotvsTest.ApiTest.models.Client;
 import com.TotvsTest.ApiTest.models.Dependent;
 import com.TotvsTest.ApiTest.models.Telephone;
-import com.TotvsTest.ApiTest.repositories.AdressRepository;
+import com.TotvsTest.ApiTest.repositories.AddressRepository;
 import com.TotvsTest.ApiTest.repositories.ClientRepository;
 import com.TotvsTest.ApiTest.repositories.DependentRepository;
 import com.TotvsTest.ApiTest.repositories.TelephoneRepository;
@@ -23,7 +23,7 @@ public class ClientControllers {
     ClientRepository clientRepository;
 
     @Autowired
-    AdressRepository addressRepository;
+    AddressRepository addressRepository;
 
     @Autowired
     DependentRepository dependentRepository;
@@ -32,43 +32,52 @@ public class ClientControllers {
     TelephoneRepository telephoneRepository;
 
     @GetMapping("/clients")
-    public Iterable<Client> listClient(){
-        return  clientRepository.findAll();
+    public Iterable<Client> listClient() {
+        return clientRepository.findAll();
     }
 
     @GetMapping("/client/{id}")
-    public Client listOneClient(@PathVariable(value = "id")long id){
-        return  clientRepository.findById(id);
+    public Client listOneClient(@PathVariable(value = "id") long id) {
+        return clientRepository.findById(id);
     }
 
     @PostMapping("/client")
-    public Client saveClient(@RequestBody Client client){
-        List<Address> address  = client.getAddress();
-        List<Dependent>dependents = client.getDependents();
-        List<Telephone>telephones = client.getTelephone();
+    public ResponseEntity<Object> saveClient(@RequestBody Client client) {
+        List<Address> address = client.getAddress();
+        List<Dependent> dependents = client.getDependents();
+        List<Telephone> telephones = client.getTelephone();
 
+        Client existClient = clientRepository.findByCpf(client.getCpfOrCnpj());
 
-        for(int i=0;i<address.size();i++){
-            address.get(i).setClient(client);
-            addressRepository.save(address.get(i));
-        }
-        for(int i=0;i<dependents.size();i++){
-            dependents.get(i).setDependent(client);
-            dependentRepository.save(dependents.get(i));
-        }
+        if (existClient == null) {
 
-        for(int i=0;i<telephones.size();i++){
-            telephones.get(i).setTelephone(client);
-            telephoneRepository.save(telephones.get(i));
+            for (int i = 0; i < address.size(); i++) {
+                address.get(i).setClient(client);
+                addressRepository.save(address.get(i));
+            }
+            for (int i = 0; i < dependents.size(); i++) {
+                // if(dependentRepository.findByName(dependents.get(i).getName())! == null)
+                dependents.get(i).setDependent(client);
+                dependentRepository.save(dependents.get(i));
+            }
+
+            for (int i = 0; i < telephones.size(); i++) {
+                telephones.get(i).setTelephone(client);
+                telephoneRepository.save(telephones.get(i));
+            }
+            clientRepository.save(client);
+            return new ResponseEntity<Object>(client, HttpStatus.CREATED);
+        } else {
+            System.out.printf("o cpf já foi cadastrado");
+            return new ResponseEntity<Object>("cpf ou cnpj já cadastrado", HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        return clientRepository.save(client);
 
     }
 
     @DeleteMapping("/client/{id}")
-    public ResponseEntity<Object> deleteClient(@PathVariable(value = "id")long id){
-        Client client =  clientRepository.findById(id);
-        if(client !=null){
+    public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") long id) {
+        Client client = clientRepository.findById(id);
+        if (client != null) {
             clientRepository.delete(client);
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -77,10 +86,10 @@ public class ClientControllers {
     }
 
     @PutMapping("/client/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable(value = "id") long id, @RequestBody Client client){
+    public ResponseEntity<Client> updateClient(@PathVariable(value = "id") long id, @RequestBody Client client) {
         Client findClient = clientRepository.findById(id);
 
-        if(findClient != null){
+        if (findClient != null) {
             findClient.setName(client.getName());
             findClient.setCpfOrCnpj(client.getCpfOrCnpj());
             findClient.setNickname(client.getNickname());
@@ -88,12 +97,12 @@ public class ClientControllers {
             findClient.setSalary(client.getSalary());
             findClient.setDateOfBirth(client.getDateOfBirth());
 
-
             clientRepository.save(findClient);
-            return new ResponseEntity<Client>(client, HttpStatus.OK);
+            return new ResponseEntity<Client>(findClient, HttpStatus.OK);
 
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 
 }
