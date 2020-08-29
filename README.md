@@ -1,5 +1,5 @@
 # Totvs Test Api
-[![modelo MER](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+[![status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 Api de cadastro de clientes esse projeto é uma crud de cadastro de clientes.
  
@@ -22,10 +22,9 @@ Os models criados são relacionados nas tableas do banco de dados são e estão 
 
 Abaixo o diagrama de entidades relacionais:
 
-<center><img src="https://user-images.githubusercontent.com/18222474/
-91640401-bdde2b00-e9f3-11ea-8c4e-fea75be84d47.JPG" width="700" height="400"></center>
+![modelo MER](https://user-images.githubusercontent.com/18222474/91640401-bdde2b00-e9f3-11ea-8c4e-fea75be84d47.JPG)
 
-### Rotas fornecidas pele aplicação 
+### Rotas fornecidas pela aplicação 
 As rotas fornecias na aplicação são as seguintes:
 #### Clientes
 Retorna uma lista de clientes
@@ -123,8 +122,9 @@ exemplo objeto json podendo ser apenas um endereço ou uma lista:
     "state":"PA",
     "country":"brasil"
   },
-     ....
   {
+   ...
+  }
  ]}
 ````
 
@@ -199,8 +199,8 @@ Deleta um telefone pela id
     Delete:  localhost:8080/api/telephones/id
 
 
-### Arquivo de importação das requisições dp Postman
-* [workspace postman]("./postman/totvsAPI.postman_collection.json")
+### Arquivo de importação das requisições do Postman
+* [workspace postman](https://github.com/elvisthermo/TotvsApiTest/tree/master/postman)
 
 ### Pré Requisitos.
 - Java 8
